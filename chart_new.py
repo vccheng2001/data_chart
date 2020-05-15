@@ -44,22 +44,28 @@ def main():
         raw_csv = open(path + filename)
         chart_events = csv.reader(raw_csv, delimiter='\t')
         #get scores
+        subj.id = subject_id
         subj.sscore = get_size_score(chart_events)
         subj.vitals = get_vitals(chart_events, subject_id)
         subj.vscore = get_vitals_score(subj.vitals)
         subj.cscore =get_continuity_score(chart_events)
         avg_score = '%.2f'%((subj.vscore + subj.sscore + subj.cscore)/3)
-        rankings[subject_id]=avg_score
+        rankings[subj]=avg_score
 
-    sorted_rankings = sorted(rankings.items(), key=lambda key: key[1], reverse=True)
-    output(sorted_rankings, in_files)
 
-def output(sorted_rankings, in_files):
-    print("Selected " + str(len(sorted_rankings)) + " patients" + " from " + str(len(in_files)))
+    output(rankings, in_files)
+
+def output(rankings, in_files):
+    print("Selected " + str(len(rankings)) + " patients" + " from " + str(len(in_files)))
     outfile = open('rankings.txt', 'w')
     sys.stdout = outfile
-    for d in sorted_rankings:
-        print("Subject No " + str(d[0]) + " Score: " + str(d[1]))
+    sorted_rankings = sorted(rankings.items(), key=lambda x: float(x[1]), reverse=True)
+    for subj, score in sorted_rankings:
+        print("Subject No " + str(subj.id) + " Score: " + str(score))
+    # for subj in sorted_rankings:
+    #     subj_id = subj.id
+    #     score = sorted_rankings[subj]
+    #     print("Subject No " + str(subj.id)  + " Score: "+ str(score))
     outfile.close()
 
 
@@ -85,6 +91,7 @@ def get_vitals(chart_events, subject_id):
             dict_vitals[subject_id].add("bp")
         if row[4] in spO2_id:
             dict_vitals[subject_id].add("spO2")
+
     return dict_vitals.get(subject_id) #None if key not in dictionary
 
 def get_vitals_score(vitals):
@@ -95,7 +102,7 @@ def get_vitals_score(vitals):
 
 
 def get_continuity_score(chart_events):
-    return random.randint(0,100)
+    return 100
 
 
 if __name__ == "__main__":
