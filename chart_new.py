@@ -12,6 +12,7 @@ import random
 
 #Item ids corresponding to 4 vitals
 
+vitalcount = 0
 DATA_SIZES = [50, 250, 500, 1000, 5000]
 
 temp_id = ["223762","676","678","223761"]
@@ -20,6 +21,7 @@ heart_id = ["211", "220045","220046","220047"]
 bp_id = ["51","442","455","6701","220179","220050","8368","8440","8441","8555","220180","220051"]
 spO2_id = ["646", "220277"]
 
+all_vitals = temp_id + resp_id + heart_id + bp_id + spO2_id
 path = "chart_files/"
 dict_vitals = {}
 rankings = {}
@@ -42,12 +44,15 @@ def main():
         filename = in_files[i]
         subject_id = (filename.split("_"))[1]
         raw_csv = open(path + filename)
-        chart_events = csv.reader(raw_csv, delimiter='\t')
+        reader = csv.reader(raw_csv, delimiter='\t')
+        chart_events = list(reader)
         #get scores
         subj.id = subject_id
         subj.sscore = get_size_score(chart_events)
+        #print("SIZE:" + str(subj.sscore))
         subj.vitals = get_vitals(chart_events, subject_id)
         subj.vscore = get_vitals_score(subj.vitals)
+        #print("VITALS:" + str(subj.vscore))
         subj.cscore =get_continuity_score(chart_events)
         avg_score = '%.2f'%((subj.vscore + subj.sscore + subj.cscore)/3)
         rankings[subj]=avg_score
@@ -62,24 +67,27 @@ def output(rankings, in_files):
     sorted_rankings = sorted(rankings.items(), key=lambda x: float(x[1]), reverse=True)
     for subj, score in sorted_rankings:
         print("Subject No " + str(subj.id) + " Score: " + str(score))
-    # for subj in sorted_rankings:
-    #     subj_id = subj.id
-    #     score = sorted_rankings[subj]
-    #     print("Subject No " + str(subj.id)  + " Score: "+ str(score))
     outfile.close()
 
 
-def get_size_score(chart_events):
-    DATA_SIZES = [50, 250, 500, 1000, 2500]
+def get_num_rows(chart_events):
     num_rows = 0
     for row in chart_events:
         num_rows += 1
+    return num_rows
+
+def get_size_score(chart_events):
+    DATA_SIZES = [50, 250, 500, 1000, 2500]
+    num_rows = get_num_rows(chart_events)
     for i in range(len(DATA_SIZES)):
         if num_rows < DATA_SIZES[i]:
             return (25*i)
     return 100
 
+
+
 def get_vitals(chart_events, subject_id):
+    dict_vitals[subject_id] = set()
     for row in chart_events:
         if row[4] in temp_id:
             dict_vitals[subject_id].add("temp")
@@ -102,7 +110,15 @@ def get_vitals_score(vitals):
 
 
 def get_continuity_score(chart_events):
-    return 100
+    count = 0
+    for row in chart_events:
+        if row[4] in all_vitals:
+            count += 1
+    num_rows = get_num_rows(chart_events)
+    if (num_rows == 0 or count == 0):
+        return 0
+    return (count/num_rows)*100
+
 
 
 if __name__ == "__main__":
