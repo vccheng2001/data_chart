@@ -118,23 +118,30 @@ def get_vitals_score(vitals):
 
 #returns continuity score based on frequency at which vitals are measured
 def get_continuity_score(chart_events,fullpath):
-    times = []
-    start_time = chart_events[0][5][5:]
-    #print('\n')
+    gaps = set()
     for row in chart_events:
         raw_charttime = row[5][5:]
+        gaps.add(raw_charttime)
+    gaps = sorted(list(gaps))
+    diff_list = []
+    for x, y in zip(gaps[0::], gaps[1::]):
         datetimeFormat = '%m-%d %H:%M:%S'
-        elapsed = datetime.strptime(raw_charttime, datetimeFormat) - datetime.strptime(start_time, datetimeFormat)
+        elapsed = datetime.strptime(y, datetimeFormat) - datetime.strptime(x, datetimeFormat)
         elapsed = elapsed.total_seconds()
-        times.append(elapsed)
+        diff_list.append(elapsed)
+    print(diff_list)
+    print(average(diff_list))
+    print(max(diff_list))
+    print('\n')
 
-    zeros=[0]*len(times)
-    #print(times)
-    plt.scatter(times, zeros)
-    plt.show()
+
     return 5
 
 
+
+
+def average(lst):
+    return sum(lst)/len(lst)
     # df = pd.read_csv(fullpath, header=None,sep='\t', usecols=[5,1])
     # times_gaps = df.index - df.index.shift(1)
     # times_gaps.plot()
