@@ -6,7 +6,7 @@ from datetime import datetime
 
 #Each row of Chart_Events is structured as follows
 path = "chart_files2/"
-
+names = ["ROW_ID","SUBJECT_ID","HADM_ID","ICUSTAY_ID","ITEMID","CHARTTIME1", "CHARTTIME2","STORETIME1","STORETIME2","CGID","VALUE","VALUENUM","VALUEUOM","WARNING","ERROR"]
 
 class Subject:
     pass
@@ -16,19 +16,12 @@ def main():
     dirListing = os.listdir(path)
     for filename in dirListing:
         fullpath = path + filename
-        #df = pd.read_csv(fullpath, delim_whitespace=True)
-        df = pd.read_csv(fullpath,
-                         names=['0', '1', '2', '3', '4', '5', 'Date', 'Time', '8', '9', '10', '11', '12', '13', '14'],
-                         delim_whitespace=True)  # read in csv with header assignment to columns
-
-        if df.empty:
-            continue
-        df = df.sort_values(['Date','Time'], ascending=[False,False], inplace=True)
-
-
-        #df = df.sort_values(by=[6], ascending=True)
-       # df.to_csv(fullpath, sep = "\t")
-
+        try:
+            df = pd.read_csv(fullpath, sep='\t',header=None,names=names)
+            df = df.sort_values("CHARTTIME1", ascending=True, inplace=False)
+            df.to_csv(fullpath, sep="\t",index=False, header=None)
+        except pd.io.common.EmptyDataError:
+            df = pd.DataFrame()
 
 
 if __name__ == "__main__":
