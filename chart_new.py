@@ -1,15 +1,11 @@
 import csv
 import sys
 import os
-import random
 from timesort import *
-from datetime import datetime
-import numpy
-import time
 import matplotlib.pyplot as plt
-import statistics as st
+from datetime import datetime
 #Each row of Chart_Events is structured as follows:
-
+import statistics as st
 #|    0   |      1     |    2    |    3    |     4    |    5      |    6      |
 #| ROW_ID | SUBJECT_ID | HADM_ID | ICU_STAY| ITEMID   | CHARTTIME | STORETIME |
 #|    7   |     8     |   9      |   10     |    11     |      12   |    13     |     14    |
@@ -25,7 +21,7 @@ bp_id = ["51","442","455","6701","220179","220050","8368","8440","8441","8555","
 spO2_id = ["646", "220277"]
 #contains all vitals ITEM_IDs
 all_vitals = temp_id + resp_id + heart_id + bp_id + spO2_id
-path = "chart_files2/"
+path = "chart_files/"
 
 dict_vitals = {}
 rankings = {}
@@ -54,7 +50,7 @@ def main():
         subj.id = subject_id
         subj.vitals = get_vitals(chart_events, subject_id)
         subj.vscore = get_vitals_score(subj.vitals) #VITALS SCORE
-        subj.cscore =get_continuity_score(chart_events,path+filename) #CONTINUITY SCORE
+        subj.cscore =get_continuity_score(chart_events) #CONTINUITY SCORE
         subj.cscore = float('%.2f'%(subj.cscore))
         subj.dscore = get_duration_score(chart_events)
         #calculates average of all four scores
@@ -115,33 +111,43 @@ def get_vitals_score(vitals):
     if vitals == None:
         return 0
     return len(vitals) * 20
-
+#
+# #returns continuity score based on frequency at which vitals are measured
+# def get_continuity_score(chart_events,fullpath):
+#     times = []
+#     start_time = chart_events[0][5][5:]
+#     #print('\n')
+#     for row in chart_events:
+#         raw_charttime = row[5][5:]
+#         datetimeFormat = '%m-%d %H:%M:%S'
+#         elapsed = datetime.strptime(raw_charttime, datetimeFormat) - datetime.strptime(start_time, datetimeFormat)
+#         elapsed = elapsed.total_seconds()
+#         times.append(elapsed)
+#
+#     zeros=[0]*len(times)
+#     print(times)
+#     plt.scatter(times, zeros)
+#     plt.show()
+#     return 5
 
 #returns continuity score based on frequency at which vitals are measured
-def get_continuity_score(chart_events,fullpath):
+def get_continuity_score(chart_events):
     gaps = set()
     for row in chart_events:
         raw_charttime = row[5][5:]
         gaps.add(raw_charttime)
     gaps = sorted(list(gaps))
-    diff_list = []
+    gaps_list = []
     for x, y in zip(gaps[0::], gaps[1::]):
         datetimeFormat = '%m-%d %H:%M:%S'
         elapsed = datetime.strptime(y, datetimeFormat) - datetime.strptime(x, datetimeFormat)
         elapsed = elapsed.total_seconds()
-        diff_list.append(elapsed)
-    elements = numpy.array(diff_list)
-    mean = numpy.mean(elements, axis=0)
-    sd = numpy.std(elements, axis=0)
-    final_list = [x for x in diff_list if (x > mean - 3 * sd)]
-    final_list = [x for x in final_list if (x < mean + 3 * sd)]
-    print(average(diff_list))
-    print(average(final_list))
-    print('\n')
-
-
-    return 5
-
+        gaps_list.append(elapsed)
+    cov = st.stdev(gaps_list)/average(gaps_list)
+    if cov < 1:
+        return 100
+    else:
+        return 0
 
 
 
@@ -150,7 +156,6 @@ def average(lst):
     # df = pd.read_csv(fullpath, header=None,sep='\t', usecols=[5,1])
     # times_gaps = df.index - df.index.shift(1)
     # times_gaps.plot()
-
 
 #returns number of rows in subject file
 def get_num_rows(chart_events):
