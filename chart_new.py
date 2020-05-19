@@ -2,6 +2,8 @@ import csv
 import sys
 import os
 import random
+from timesort import *
+from datetime import datetime
 
 #Each row of Chart_Events is structured as follows:
 
@@ -32,6 +34,7 @@ class Subject:
 def main():
     # Add all patient files in folder to in_files list
     dirListing = os.listdir(path)
+    sortByChartTime(dirListing,path)
     in_files = []
     for item in dirListing:
         if ".csv" in item:
@@ -52,6 +55,7 @@ def main():
         subj.vscore = get_vitals_score(subj.vitals) #VITALS SCORE
         subj.cscore =get_continuity_score(chart_events) #CONTINUITY SCORE
         subj.cscore = float('%.2f'%(subj.cscore))
+        subj.dscore = get_duration_score(chart_events)
         #calculates average of all three scores
         avg_score = '%.2f'%((subj.vscore + subj.sscore + subj.cscore)/3) #AVERAGE OUT ALL THREE SCORES
         rankings[subj]=avg_score #put into a dictionary of all subjects
@@ -139,6 +143,15 @@ def get_continuity_score(chart_events):
     if (num_rows == 0 or count == 0):
         return 0
     return (count/num_rows)*100
+
+def get_duration_score(chart_events):
+    start_time = chart_events[0][5]
+    num_rows = get_num_rows(chart_events)
+    last_row = num_rows - 1
+    end_time = chart_events[last_row][5]
+    print(start_time)
+    print(end_time)
+    print('\n')
 
 
 
