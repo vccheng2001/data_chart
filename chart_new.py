@@ -4,6 +4,7 @@ import os
 import random
 from timesort import *
 from datetime import datetime
+import numpy
 import time
 import matplotlib.pyplot as plt
 import statistics as st
@@ -129,9 +130,13 @@ def get_continuity_score(chart_events,fullpath):
         elapsed = datetime.strptime(y, datetimeFormat) - datetime.strptime(x, datetimeFormat)
         elapsed = elapsed.total_seconds()
         diff_list.append(elapsed)
-    print(diff_list)
+    elements = numpy.array(diff_list)
+    mean = numpy.mean(elements, axis=0)
+    sd = numpy.std(elements, axis=0)
+    final_list = [x for x in diff_list if (x > mean - 3 * sd)]
+    final_list = [x for x in final_list if (x < mean + 3 * sd)]
     print(average(diff_list))
-    print(max(diff_list))
+    print(average(final_list))
     print('\n')
 
 
