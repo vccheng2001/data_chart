@@ -4,7 +4,9 @@ import os
 import random
 from timesort import *
 from datetime import datetime
-
+import time
+import matplotlib.pyplot as plt
+import statistics as st
 #Each row of Chart_Events is structured as follows:
 
 #|    0   |      1     |    2    |    3    |     4    |    5      |    6      |
@@ -51,7 +53,7 @@ def main():
         subj.id = subject_id
         subj.vitals = get_vitals(chart_events, subject_id)
         subj.vscore = get_vitals_score(subj.vitals) #VITALS SCORE
-        subj.cscore =get_continuity_score(chart_events) #CONTINUITY SCORE
+        subj.cscore =get_continuity_score(chart_events,path+filename) #CONTINUITY SCORE
         subj.cscore = float('%.2f'%(subj.cscore))
         subj.dscore = get_duration_score(chart_events)
         #calculates average of all four scores
@@ -90,16 +92,6 @@ def detailed_output(rankings):
     outfile.close()
 
 
-#returns number of rows in subject file
-def get_num_rows(chart_events):
-    num_rows = 0
-    for row in chart_events:
-        num_rows += 1
-    return num_rows
-
-
-
-
 #returns list of all measured vitals for a given subject
 def get_vitals(chart_events, subject_id):
     dict_vitals[subject_id] = set()
@@ -125,17 +117,38 @@ def get_vitals_score(vitals):
 
 
 #returns continuity score based on frequency at which vitals are measured
-def get_continuity_score(chart_events):
-    count = 0
+def get_continuity_score(chart_events,fullpath):
+    times = []
+    start_time = chart_events[0][5][5:]
+    #print('\n')
     for row in chart_events:
-        if row[4] in all_vitals:
-            count += 1
-    num_rows = get_num_rows(chart_events)
-    if (num_rows == 0 or count == 0):
-        return 0
-    return (count/num_rows)*100
+        raw_charttime = row[5][5:]
+        datetimeFormat = '%m-%d %H:%M:%S'
+        elapsed = datetime.strptime(raw_charttime, datetimeFormat) - datetime.strptime(start_time, datetimeFormat)
+        elapsed = elapsed.total_seconds()
+        times.append(elapsed)
 
-def get_duration(chart_events):
+    zeros=[0]*len(times)
+    #print(times)
+    plt.scatter(times, zeros)
+    plt.show()
+    return 5
+
+
+    # df = pd.read_csv(fullpath, header=None,sep='\t', usecols=[5,1])
+    # times_gaps = df.index - df.index.shift(1)
+    # times_gaps.plot()
+
+
+#returns number of rows in subject file
+def get_num_rows(chart_events):
+    num_rows = 0
+    for row in chart_events:
+        num_rows += 1
+    return num_rows
+
+
+def get_duration_of_stay(chart_events):
     start_time = (chart_events[0][5])[5:]
     last_row = get_num_rows(chart_events) - 1
     end_time = (chart_events[last_row][5])[5:]
@@ -146,7 +159,7 @@ def get_duration(chart_events):
 
 def get_duration_score(chart_events):
     DAYS_ARRAY = [1, 2, 4, 8, 16]
-    duration = get_duration(chart_events)
+    duration = get_duration_of_stay(chart_events)
     seconds = duration.total_seconds()
     days = seconds/86400
     for i in range(len(DAYS_ARRAY)):
