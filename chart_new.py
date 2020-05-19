@@ -21,7 +21,7 @@ bp_id = ["51","442","455","6701","220179","220050","8368","8440","8441","8555","
 spO2_id = ["646", "220277"]
 #contains all vitals ITEM_IDs
 all_vitals = temp_id + resp_id + heart_id + bp_id + spO2_id
-path = "chart_files/"
+path = "chart_files2/"
 
 dict_vitals = {}
 rankings = {}
@@ -56,8 +56,8 @@ def main():
         avg_score = '%.2f'%((subj.vscore + subj.sscore + subj.cscore)/3) #AVERAGE OUT ALL THREE SCORES
         rankings[subj]=avg_score #put into a dictionary of all subjects
 
-    output(rankings)
-    #detailed_output(rankings)
+    #output(rankings)
+    detailed_output(rankings)
 
 #Print output of rankings to a text file, rankings.txt
 def output(rankings):
@@ -82,7 +82,7 @@ def detailed_output(rankings):
         v = subj.vscore
         c = subj.cscore
         print('Subject No ' + str(subj.id))
-        print(f'Individual Scores: S {s} /V {v} /C {c}: ')
+        print(f'Individual Scores: S {s} | V {v} | C {c}: ')
         print('Overall score: ' + str(score))
         print("\n")
     outfile.close()
