@@ -21,7 +21,7 @@ bp_id = ["51","442","455","6701","220179","220050","8368","8440","8441","8555","
 spO2_id = ["646", "220277"]
 #contains all vitals ITEM_IDs
 all_vitals = temp_id + resp_id + heart_id + bp_id + spO2_id
-path = "chart_files/"
+path = "chart_files2/"
 
 dict_vitals = {}
 rankings = {}
@@ -46,13 +46,13 @@ def main():
         raw_csv = open(path + filename)
         reader = csv.reader(raw_csv, delimiter='\t')
         chart_events = list(reader)
-
+        num_rows = get_num_rows(chart_events)
         subj.id = subject_id
         subj.vitals = get_vitals(chart_events, subject_id)
         subj.vscore = get_vitals_score(subj.vitals) #VITALS SCORE
-        subj.cscore =get_continuity_score(chart_events) #CONTINUITY SCORE
+        subj.cscore =get_continuity_score(chart_events,num_rows) #CONTINUITY SCORE
         subj.cscore = float('%.2f'%(subj.cscore))
-        subj.dscore = get_duration_score(chart_events)
+        subj.dscore = get_duration_score(chart_events,num_rows)
         #calculates average of all four scores
         avg_score = '%.2f'%((subj.vscore + subj.cscore + subj.dscore)/3) #AVERAGE
         rankings[subj]=avg_score #put into a dictionary of all subjects
@@ -111,9 +111,43 @@ def get_vitals_score(vitals):
     if vitals == None:
         return 0
     return len(vitals) * 20
-#
+
+
+#returns continuity score based on coefficient of variation
+def get_continuity_score(chart_events,num_rows):
+    gaps = set()
+    if num_rows == 0:
+        return 0
+    for row in chart_events:
+        raw_charttime = row[5][5:]
+        gaps.add(raw_charttime)
+    gaps = sorted(list(gaps))
+    gaps_list = []
+    for x, y in zip(gaps[0::], gaps[1::]):
+        datetimeFormat = '%m-%d %H:%M:%S'
+        elapsed = datetime.strptime(y, datetimeFormat) - datetime.strptime(x, datetimeFormat)
+        elapsed = elapsed.total_seconds()
+        gaps_list.append(elapsed)
+    try:
+        cov = st.stdev(gaps_list)/average(gaps_list)
+        print(gaps_list)
+        print(cov)
+        print('\n')
+    except:
+        return 0
+    if cov < 1:
+        return 100
+    else:
+        return 0
+
+#Calculates mean of a list
+def average(lst):
+    return sum(lst)/len(lst)
+
 # #returns continuity score based on frequency at which vitals are measured
-# def get_continuity_score(chart_events,fullpath):
+# def get_continuity_score(chart_events,num_rows):
+#     if num_rows == 0:
+#         return 0
 #     times = []
 #     start_time = chart_events[0][5][5:]
 #     #print('\n')
@@ -128,34 +162,8 @@ def get_vitals_score(vitals):
 #     print(times)
 #     plt.scatter(times, zeros)
 #     plt.show()
-#     return 5
-
-#returns continuity score based on frequency at which vitals are measured
-def get_continuity_score(chart_events):
-    gaps = set()
-    for row in chart_events:
-        raw_charttime = row[5][5:]
-        gaps.add(raw_charttime)
-    gaps = sorted(list(gaps))
-    gaps_list = []
-    for x, y in zip(gaps[0::], gaps[1::]):
-        datetimeFormat = '%m-%d %H:%M:%S'
-        elapsed = datetime.strptime(y, datetimeFormat) - datetime.strptime(x, datetimeFormat)
-        elapsed = elapsed.total_seconds()
-        gaps_list.append(elapsed)
-    cov = st.stdev(gaps_list)/average(gaps_list)
-    if cov < 1:
-        return 100
-    else:
-        return 0
-
-
-
-def average(lst):
-    return sum(lst)/len(lst)
-    # df = pd.read_csv(fullpath, header=None,sep='\t', usecols=[5,1])
-    # times_gaps = df.index - df.index.shift(1)
-    # times_gaps.plot()
+#     return 0
+#
 
 #returns number of rows in subject file
 def get_num_rows(chart_events):
@@ -165,18 +173,22 @@ def get_num_rows(chart_events):
     return num_rows
 
 
-def get_duration_of_stay(chart_events):
+#Returns duration of stay in days, hours, minutes, seconds
+def get_duration_of_stay(chart_events, num_rows):
     start_time = (chart_events[0][5])[5:]
-    last_row = get_num_rows(chart_events) - 1
+    last_row = num_rows - 1
     end_time = (chart_events[last_row][5])[5:]
     datetimeFormat = '%m-%d %H:%M:%S'
     duration_of_stay= (datetime.strptime(end_time, datetimeFormat) - datetime.strptime(start_time, datetimeFormat))
     return duration_of_stay
 
 
-def get_duration_score(chart_events):
+#Calculates duration score for given duration of stay in days
+def get_duration_score(chart_events,num_rows):
     DAYS_ARRAY = [1, 2, 4, 8, 16]
-    duration = get_duration_of_stay(chart_events)
+    if num_rows == 0:
+        return 0
+    duration = get_duration_of_stay(chart_events,num_rows)
     seconds = duration.total_seconds()
     days = seconds/86400
     for i in range(len(DAYS_ARRAY)):
