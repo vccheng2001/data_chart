@@ -14,7 +14,6 @@ from datetime import datetime
 
 #Item ids corresponding to 4 vitals
 
-DATA_SIZES = [50, 250, 500, 1000, 5000]
 
 temp_id = ["223762","676","678","223761"]
 resp_id = ["618", "615", "220210", "224690"]
@@ -50,14 +49,13 @@ def main():
         chart_events = list(reader)
 
         subj.id = subject_id
-        subj.sscore = get_size_score(chart_events) #SIZE SCORE
         subj.vitals = get_vitals(chart_events, subject_id)
         subj.vscore = get_vitals_score(subj.vitals) #VITALS SCORE
         subj.cscore =get_continuity_score(chart_events) #CONTINUITY SCORE
         subj.cscore = float('%.2f'%(subj.cscore))
         subj.dscore = get_duration_score(chart_events)
-        #calculates average of all three scores
-        avg_score = '%.2f'%((subj.vscore + subj.sscore + subj.cscore)/3) #AVERAGE OUT ALL THREE SCORES
+        #calculates average of all four scores
+        avg_score = '%.2f'%((subj.vscore + subj.cscore + subj.dscore)/3) #AVERAGE
         rankings[subj]=avg_score #put into a dictionary of all subjects
 
     #output(rankings)
@@ -82,11 +80,11 @@ def detailed_output(rankings):
     # sort subjects by score (highest to lowest out of 100)
     sorted_rankings = sorted(rankings.items(), key=lambda x: float(x[1]), reverse=True)
     for subj, score in sorted_rankings:
-        s = subj.sscore
         v = subj.vscore
         c = subj.cscore
+        d = subj.dscore
         print('Subject No ' + str(subj.id))
-        print(f'Individual Scores: S {s} | V {v} | C {c}: ')
+        print(f'Individual Scores: V {v} | C {c}: | D {d}')
         print('Overall score: ' + str(score))
         print("\n")
     outfile.close()
@@ -99,14 +97,7 @@ def get_num_rows(chart_events):
         num_rows += 1
     return num_rows
 
-#returns size score based on number of rows
-def get_size_score(chart_events):
-    DATA_SIZES = [50, 250, 500, 1000, 2500]
-    num_rows = get_num_rows(chart_events)
-    for i in range(len(DATA_SIZES)):
-        if num_rows < DATA_SIZES[i]:
-            return (25*i)
-    return 100
+
 
 
 #returns list of all measured vitals for a given subject
@@ -144,15 +135,24 @@ def get_continuity_score(chart_events):
         return 0
     return (count/num_rows)*100
 
-def get_duration_score(chart_events):
-    start_time = chart_events[0][5]
-    num_rows = get_num_rows(chart_events)
-    last_row = num_rows - 1
-    end_time = chart_events[last_row][5]
-    print(start_time)
-    print(end_time)
-    print('\n')
+def get_duration(chart_events):
+    start_time = (chart_events[0][5])[5:]
+    last_row = get_num_rows(chart_events) - 1
+    end_time = (chart_events[last_row][5])[5:]
+    datetimeFormat = '%m-%d %H:%M:%S'
+    duration_of_stay= (datetime.strptime(end_time, datetimeFormat) - datetime.strptime(start_time, datetimeFormat))
+    return duration_of_stay
 
+
+def get_duration_score(chart_events):
+    DAYS_ARRAY = [1, 2, 4, 8, 16]
+    duration = get_duration(chart_events)
+    seconds = duration.total_seconds()
+    days = seconds/86400
+    for i in range(len(DAYS_ARRAY)):
+        if days < DAYS_ARRAY[i]:
+            return (20 * i)
+    return 100
 
 
 if __name__ == "__main__":
