@@ -16,7 +16,7 @@ import statistics as st
 
 #Item ids corresponding to 4 vitals
 
-
+DURATION = 4320
 temp_id = ["223762","676","678","223761"]
 resp_id = ["618", "615", "220210", "224690"]
 heart_id = ["211", "220045","220046","220047"]
@@ -28,7 +28,7 @@ path = "chart_files2/"
 
 
 dict_vitals = {}
-rankings = {}
+rankings = []
 
 class Subject:
     pass
@@ -61,11 +61,11 @@ def main():
         else:
             subj.vscore = get_vitals_score(chart_events, subject_id, num_rows) #VITALS SCORE
             subj.cscore =get_continuity_score(chart_events,count,subject_id) #CONTINUITY SCORE
-        avg_score = '%.2f'%((subj.vscore + subj.cscore)/2) #AVERAGE
-        rankings[subj]=avg_score #put into a dictionary of all subjects
+            rankings.append(subj)
         count+=1
-    plt.show()
     detailed_output(rankings)
+    plt.show()
+
 
 
 #returns list of all measured vitals for a given subject
@@ -101,15 +101,12 @@ def get_continuity_score(chart_events,count,subject_id):
         #seconds since first timestamp
         elapsed = datetime.strptime(raw_charttime, datetimeFormat) - datetime.strptime(start_time, datetimeFormat)
         elapsed = int(elapsed.total_seconds()/60)
-        if (elapsed <= 2880):
+        if (elapsed <= DURATION):
             times.append(elapsed)
     zeros = [subject_id]*len(times)
     plt.scatter(times,zeros)
-    res = stats.kstest(times,'uniform',args=(0,2880),N=len(times))
-    print(subject_id)
-    print(res)
-    print('\n')
-    return 0
+    res = stats.kstest(times,'uniform',args=(0,DURATION),N=len(times))
+    return res
 
 #returns number of rows in subject file
 def get_num_rows(chart_events):
@@ -124,13 +121,11 @@ def detailed_output(rankings):
     sys.stdout = outfile
 
     # sort subjects by score (highest to lowest out of 100)
-    sorted_rankings = sorted(rankings.items(), key=lambda x: float(x[1]), reverse=True)
-    for subj, score in sorted_rankings:
+    for subj in rankings:
         v = subj.vscore
         c = subj.cscore
         print('Subject No ' + str(subj.id))
-        print(f'Individual Scores: V {v} | C {c}')
-        print('Overall score: ' + str(score))
+        print(f'Individual Scores: Vitals {v} | Continuity {c}')
         print("\n")
     outfile.close()
 
