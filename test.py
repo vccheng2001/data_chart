@@ -4,7 +4,8 @@ import os
 from timesort import *
 import matplotlib.pyplot as plt
 from datetime import datetime
-from numpy import *
+import numpy as np
+from scipy import stats
 import math
 #Each row of Chart_Events is structured as follows:
 import statistics as st
@@ -87,6 +88,9 @@ def get_vitals_score(chart_events, subject_id, num_rows):
     return len(vitals) * 20
 
 
+
+#The p-value returned by the k-s test has the same interpretation as other p-values. You reject the null hypothesis that the two samples were drawn from the same distribution if the p-value is less than your significance level. You can find tables online for the conversion of the D statistic into a p-value if you are interested in the procedure.
+
 #returns continuity score based on frequency at which vitals are measured
 def get_continuity_score(chart_events,count,subject_id):
     times = []
@@ -96,13 +100,16 @@ def get_continuity_score(chart_events,count,subject_id):
         datetimeFormat = '%m-%d %H:%M:%S'
         #seconds since first timestamp
         elapsed = datetime.strptime(raw_charttime, datetimeFormat) - datetime.strptime(start_time, datetimeFormat)
-        elapsed = elapsed.total_seconds()/3600
-        if (elapsed <= 96):
+        elapsed = int(elapsed.total_seconds()/60)
+        if (elapsed <= 2880):
             times.append(elapsed)
-    zeros = [count]*len(times)
-    plt.scatter(times,zeros,label=str(subject_id))
+    zeros = [subject_id]*len(times)
+    plt.scatter(times,zeros)
+    res = stats.kstest(times,'uniform',args=(0,2880),N=len(times))
+    print(subject_id)
+    print(res)
+    print('\n')
     return 0
-
 
 #returns number of rows in subject file
 def get_num_rows(chart_events):
