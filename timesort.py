@@ -11,8 +11,9 @@ def sortByChartTime(dirListing, path):
         fullpath = path + filename
         try:
             df = pd.read_csv(fullpath, sep='\t',header=None,names=names)
-            df = df.sort_values("CHARTTIME1", ascending=True, inplace=False)
-            #df["CHARTTIME1"] = pd.to_datetime(df["CHARTTIME1"], format='%Y-%m-%d %H:%M:%S')
+            df = pd.DataFrame(sorted(df.values, key=lambda x: (x[5][5:].split('-')[0], x[5][5:].split('-')[1])), columns=df.columns)
+
+            #df = df.sort_values("CHARTTIME1", ascending=True, inplace=False)
             df.to_csv(fullpath, sep="\t",index=False, header=None)
         except pd.io.common.EmptyDataError:
             df = pd.DataFrame()
