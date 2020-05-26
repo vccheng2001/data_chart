@@ -24,7 +24,7 @@ bp_id = ["51","442","455","6701","220179","220050","8368","8440","8441","8555","
 spO2_id = ["646", "220277"]
 #contains all vitals ITEM_IDs
 all_vitals = temp_id + resp_id + heart_id + bp_id + spO2_id
-path = "chart_files3/"
+path = "chart_files2/"
 
 
 dict_vitals = {}
@@ -108,7 +108,7 @@ def get_continuity_score(chart_events,count,subject_id):
         except ValueError:
             continue
         elapsed = int(elapsed.total_seconds() / 60)
-        if (elapsed <= DURATION and elapsed >= 0):
+        if (elapsed <= DURATION):
             times.append(elapsed)
     if times == []:
         return 0
@@ -128,8 +128,10 @@ def get_num_rows(chart_events):
     return num_rows
 
 
+#600 over 75% from 1500 to 24500
+#4646 over 75% from 24500 to 49500
 def detailed_output(rankings):
-    outfile = open('detailed_rankings.txt', 'w')
+    outfile = open('detailed_rankings2.txt', 'w')
     sys.stdout = outfile
 
     # sort subjects by score (highest to lowest out of 100)
@@ -137,9 +139,9 @@ def detailed_output(rankings):
     for subj, score in sorted_rankings:
         v = subj.vscore
         c = subj.cscore
-        print('Subject No ' + str(subj.id))
-        print(f'Individual Scores: V {v} | C {c}')
-        print('Overall score: ' + str(score))
+        print('Subject No ' + str(subj.id), end="")
+        print(f'Individual Scores: V {v} | C {c}',end="")
+        print('Overall score: ' + str(score),end="")
         print("\n")
     outfile.close()
 
