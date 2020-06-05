@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import sys
 
 
-SCORE_THRESHOLD = 75 #minimum score to consider
+SCORE_THRESHOLD = 80 #minimum score to consider
 icd9_dict = {}
 scores_dict = {}
 
@@ -27,7 +27,7 @@ def main():
     for line in f:
         icd9_code = line[4]
         subject_id = line[1]
-        if icd9_code == "" or subject_id == "SUBJECT_ID":
+        if icd9_code == "" or subject_id == "SUBJECT_ID" or subject_id not in scores_dict:
             continue
         if icd9_code not in icd9_dict:
             icd9_dict[icd9_code] = set()
