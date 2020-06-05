@@ -18,7 +18,7 @@ icd9_names_file = "icd9/D_ICD_DIAGNOSES.csv"
 score_file = "detailed_rankings.txt"
 
 def main():
-    scores()
+    filter_by_scores()
     #######reading diagoses ICD9 csv file#######
     raw_csv = open(icd9_file)
     reader = csv.reader(raw_csv, delimiter=',')
@@ -37,11 +37,26 @@ def main():
 
     #Sort and filter icd9 codes dictionary
     icd9_dict_sorted= {k: icd9_dict[k] for k in sorted(icd9_dict)}
-    filtered_dict = filter_by(prefixes, icd9_dict_sorted)
+    filtered_dict = filter_by_code(prefixes, icd9_dict_sorted)
     icd9_output(filtered_dict)
 
-#Filter out items in dictionary by ICD9 code
-def filter_by(prefixes, dict):
+
+#1. Puts all scores above SCORE_THRESHOLD from detailed_rankings.txt into a file
+# Eliminates subject files with inadequate scores
+def filter_by_scores():
+    scores = open(score_file)
+    for line in scores:
+        if line.strip() == "":
+            continue
+        line = line.split(":")
+        score = line[-1].strip()
+        subject_id = line[0][8:]
+        if float(score) >= SCORE_THRESHOLD:
+            scores_dict[subject_id] = score
+
+
+#2. Filter out items in dictionary by ICD9 code prefix (first three characters)
+def filter_by_code(prefixes, dict):
     filtered_dict = {}
     for key, value in dict.items():
         for prefix in prefixes:
@@ -70,19 +85,6 @@ def get_disease_name(dict):
             dict[name] = dict.pop(icd9_code)
         except:
             continue
-
-
-#Puts all scores above SCORE_THRESHOLD from detailed_rankings.txt into a file
-def scores():
-    scores = open(score_file)
-    for line in scores:
-        if line.strip() == "":
-            continue
-        line = line.split(":")
-        score = line[-1].strip()
-        subject_id = line[0][8:]
-        if float(score) >= SCORE_THRESHOLD:
-            scores_dict[subject_id] = score
 
 
 if __name__ == "__main__":

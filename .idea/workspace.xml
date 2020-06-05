@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="778fc430-4a16-4c69-b84c-6ecb28e18fd4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/icd9.py" beforeDir="false" afterPath="$PROJECT_DIR$/icd9.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/icd9_output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/icd9_output.txt" afterDir="false" />
     </list>
@@ -79,14 +80,14 @@
         <counts>
           <entry key="csv" value="1" />
           <entry key="dummy" value="37" />
-          <entry key="py" value="17048" />
+          <entry key="py" value="17223" />
           <entry key="txt" value="4164" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="4202" />
-          <entry key="Python" value="17048" />
+          <entry key="Python" value="17223" />
         </counts>
       </usages-collector>
     </session>
@@ -123,8 +124,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/detailed_rankings.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="28" column="13" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="13" />
+            <state relative-caret-position="255">
+              <caret line="180" column="41" selection-start-line="180" selection-start-column="41" selection-end-line="180" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -132,13 +133,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/icd9.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="20" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
+            <state relative-caret-position="160">
+              <caret line="21" column="48" lean-forward="true" selection-start-line="21" selection-start-column="48" selection-end-line="21" selection-end-column="48" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
-                <marker date="1591321108000" expanded="true" signature="1270:1693" ph="..." />
-                <marker date="1591321108000" expanded="true" signature="2037:2116" ph="..." />
-                <marker date="1591321108000" expanded="true" signature="2130:2424" ph="..." />
+                <marker date="1591321701000" expanded="true" signature="1774:2197" ph="..." />
+                <marker date="1591321701000" expanded="true" signature="2541:2543" ph="..." />
               </folding>
             </state>
           </provider>
@@ -147,8 +147,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/icd9_output.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+            <state relative-caret-position="60">
+              <caret line="4" column="42" lean-forward="true" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
             </state>
           </provider>
         </entry>
@@ -173,7 +173,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>4800</find>
       <find>4803</find>
       <find>16651:</find>
       <find>480</find>
@@ -191,7 +190,6 @@
       <find>18605,</find>
       <find>46619</find>
       <find>22836</find>
-      <find>5118</find>
       <find>file1</find>
       <find>57599</find>
       <find>24440</find>
@@ -202,6 +200,8 @@
       <find>96104</find>
       <find>42605</find>
       <find>40265</find>
+      <find>62383</find>
+      <find>5118</find>
       <find>95705</find>
     </findStrings>
   </component>
@@ -432,7 +432,7 @@
       <window_info id="Favorites" order="2" sideWeight="0.5024311" side_tool="true" weight="0.296" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32901135" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33711508" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.045380875" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3987034" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -553,13 +553,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/timesort.py">
+    <entry file="file://$PROJECT_DIR$/icd9/DIAGNOSES_ICD.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="118">
+          <caret line="243711" column="28" selection-start-line="243711" selection-start-column="22" selection-end-line="243711" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -570,36 +567,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/icd9/DIAGNOSES_ICD.csv">
+    <entry file="file://$PROJECT_DIR$/icd9_output.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="243711" column="28" selection-start-line="243711" selection-start-column="22" selection-end-line="243711" selection-end-column="28" />
+        <state relative-caret-position="60">
+          <caret line="4" column="42" lean-forward="true" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timesort.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/detailed_rankings.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="28" column="13" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/icd9_output.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        <state relative-caret-position="255">
+          <caret line="180" column="41" selection-start-line="180" selection-start-column="41" selection-end-line="180" selection-end-column="41" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/icd9.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="20" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
+        <state relative-caret-position="160">
+          <caret line="21" column="48" lean-forward="true" selection-start-line="21" selection-start-column="48" selection-end-line="21" selection-end-column="48" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-            <marker date="1591321108000" expanded="true" signature="1270:1693" ph="..." />
-            <marker date="1591321108000" expanded="true" signature="2037:2116" ph="..." />
-            <marker date="1591321108000" expanded="true" signature="2130:2424" ph="..." />
+            <marker date="1591321701000" expanded="true" signature="1774:2197" ph="..." />
+            <marker date="1591321701000" expanded="true" signature="2541:2543" ph="..." />
           </folding>
         </state>
       </provider>
