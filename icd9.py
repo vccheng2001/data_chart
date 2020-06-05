@@ -11,13 +11,17 @@ This is an algorithm to categorize subject files into specified diseases. Subjec
 3. Subject's other diseases 
 '''
 
-SCORE_THRESHOLD = 80 #minimum score to consider
+SCORE_THRESHOLD = 75 #minimum score to consider
+DISEASE_THRESHOLD = 4
 icd9_dict = {}
 scores_dict = {}
+subj_disease_dict = {}
 disease_count_dict = {}
 
 #Codes to filter by
-prefixes = ["466","480","487","511"]
+
+RESPIRATORY = [(460,519)]
+prefixes = [(460,519)]#[(460,466),(470,478),(480,488),(511,512)] #["466","480","487","511"]
 
 #Files to read/write to
 icd9_file = "icd9/DIAGNOSES_ICD.csv"
@@ -36,16 +40,17 @@ def main():
         subject_id = line[1]
         if icd9_code == "" or subject_id == "SUBJECT_ID" or subject_id not in scores_dict:
             continue
-        fill_dict(disease_count_dict,subject_id, icd9_code)
+        fill_dict(subj_disease_dict,subject_id, icd9_code)
         fill_dict(icd9_dict, icd9_code, subject_id)
 
 
     #Sort and filter icd9 codes dictionary
     icd9_dict_sorted= {k: icd9_dict[k] for k in sorted(icd9_dict)}
-
     filtered_dict = filter_by_code(prefixes, icd9_dict_sorted)
-    icd9_output(disease_count_dict)
-    icd9_output1(filtered_dict)
+    filter_by_subjects(filtered_dict)
+    print(disease_count_dict)
+    output(filtered_dict, "filtered_output.txt")
+    output(subj_disease_dict, "disease_count.txt")
 
 
 #Helper function to fill out a dictionary based on ICD9_codes files
@@ -76,42 +81,51 @@ def filter_by_scores():
 def filter_by_code(prefixes, dict):
     filtered_dict = {}
     for key, value in dict.items():
-        for prefix in prefixes:
-            if key.startswith(prefix) == True:
-                filtered_dict[key] = value
+        if check_prefix(prefixes, key) == True:
+             filtered_dict[key] = value
     return filtered_dict
 
-# def filter_by_subjects(dict):
-#     for key, value in dict.items:
-#         subjects = value
-#         for subj in subjects:
 
 
-def get_subj_disease_count():
-    pass
+def check_prefix(prefixes, s):
+    for prefix in prefixes:
+        for i in range(prefix[0], prefix[1]):
+            if s.startswith(str(i)):
+                return True
+    return False
+
+
+
+#Filters out subjects who have
+def filter_by_subjects(dict):
+    for key, value in dict.items():
+        subjects = value
+        #check each subject for associated diseases
+        for subj in subjects:
+            diseases = subj_disease_dict[subj]
+            #check diseases of subject s
+            for d in diseases:
+                if check_prefix(prefixes, d) == False:
+                    disease_count_dict[subj] = disease_count_dict.get(subj, 0) + 1
+            try:
+                dict[key] = [subj for subj in subjects if disease_count_dict[subj] < DISEASE_THRESHOLD]
+            except KeyError:
+                continue
+
+
 
 
 
 
 
 #Outputs filtered icd9code:{subjectIDs} to text file
-def icd9_output(dict):
-    outfile = open('icd9_output.txt', 'w')
+def output(dict, txtfile):
+    outfile = open(txtfile, 'w')
     sys.stdout = outfile
     for key, value in dict.items():
         print(f"{key}: {(value)}")
     outfile.close()
 
-
-
-
-#Outputs filtered icd9code:{subjectIDs} to text file
-def icd9_output1(dict):
-    outfile = open('icd9_output1.txt', 'w')
-    sys.stdout = outfile
-    for key, value in dict.items():
-        print(f"{key}: {(value)}")
-    outfile.close()
 
 #Get disease name based on ICD9 code from D_ICD_DIAGNOSES.csv
 def get_disease_name(dict):
