@@ -47,6 +47,8 @@ def main():
     icd9_output(disease_count_dict)
     icd9_output1(filtered_dict)
 
+
+#Helper function to fill out a dictionary based on ICD9_codes files
 def fill_dict (dict, key, value):
     if key not in dict:
         dict[key] = set()
