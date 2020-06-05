@@ -19,9 +19,7 @@ subj_disease_dict = {}
 disease_count_dict = {}
 
 #Codes to filter by
-
-RESPIRATORY = [(460,519)]
-prefixes = [(460,519)]#[(460,466),(470,478),(480,488),(511,512)] #["466","480","487","511"]
+prefixes = [(460,519)] #Respiration
 
 #Files to read/write to
 icd9_file = "icd9/DIAGNOSES_ICD.csv"
@@ -49,9 +47,17 @@ def main():
     filtered_dict = filter_by_code(prefixes, icd9_dict_sorted)
     filter_by_subjects(filtered_dict)
     print(disease_count_dict)
+    print("Total patients extracted: " + str(sum_total(filtered_dict)))
     output(filtered_dict, "filtered_output.txt")
     output(subj_disease_dict, "disease_count.txt")
 
+#Returns total number of patients extracted after filtering
+def sum_total(dict):
+    cnt = 0
+    for key, value in dict.items():
+        for v in value:
+            cnt +=1
+    return cnt
 
 #Helper function to fill out a dictionary based on ICD9_codes files
 def fill_dict (dict, key, value):
@@ -86,7 +92,7 @@ def filter_by_code(prefixes, dict):
     return filtered_dict
 
 
-
+#check if subject has specified diseases by checking against ICD9 code prefix
 def check_prefix(prefixes, s):
     for prefix in prefixes:
         for i in range(prefix[0], prefix[1]):
@@ -96,7 +102,8 @@ def check_prefix(prefixes, s):
 
 
 
-#Filters out subjects who have
+#Filters out subjects who have a large amount of different diseases/conditions
+#Purpose is to minimize the number of independent variables
 def filter_by_subjects(dict):
     for key, value in dict.items():
         subjects = value
@@ -104,6 +111,7 @@ def filter_by_subjects(dict):
         for subj in subjects:
             diseases = subj_disease_dict[subj]
             #check diseases of subject s
+            disease_count_dict[subj] = 0
             for d in diseases:
                 if check_prefix(prefixes, d) == False:
                     disease_count_dict[subj] = disease_count_dict.get(subj, 0) + 1
@@ -114,11 +122,7 @@ def filter_by_subjects(dict):
 
 
 
-
-
-
-
-#Outputs filtered icd9code:{subjectIDs} to text file
+#Outputs filtered disease/patients data to text file
 def output(dict, txtfile):
     outfile = open(txtfile, 'w')
     sys.stdout = outfile
