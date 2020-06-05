@@ -12,19 +12,24 @@ This is an algorithm to categorize subject files into specified diseases. Subjec
 '''
 
 SCORE_THRESHOLD = 75 #minimum score to consider
-DISEASE_THRESHOLD = 4
+DISEASE_THRESHOLD = 5
 icd9_dict = {}
 scores_dict = {}
 subj_disease_dict = {}
 disease_count_dict = {}
 
-#Codes to filter by
-prefixes = [(460,519)] #Respiration
+codes_dict = {1:[140,240],2:[240,280],3:[280,290],4:[290,320],5:[320,390],6:[390,460],7:[460,520],8:[520,580],9:[580,630]
+              ,10:[630,680],11:[680,710],12:[710,740],13:[740,760],14:[760,780],15:[780,800],16:[800,1000]}
+#Codes to filter by"
+prefixes = [(460,467)] #Respiration
 
 #Files to read/write to
 icd9_file = "icd9/DIAGNOSES_ICD.csv"
 icd9_names_file = "icd9/D_ICD_DIAGNOSES.csv"
 score_file = "detailed_rankings.txt"
+
+
+
 
 def main():
     filter_by_scores()
@@ -93,32 +98,55 @@ def filter_by_code(prefixes, dict):
 
 
 #check if subject has specified diseases by checking against ICD9 code prefix
-def check_prefix(prefixes, s):
+def check_prefix(prefixes, k):
     for prefix in prefixes:
         for i in range(prefix[0], prefix[1]):
-            if s.startswith(str(i)):
+            if k.startswith(str(i)):
                 return True
     return False
 
 
 
+def get__prefix_category():
+    cats = set()
+    for prefix in prefixes:
+        for pre in range(prefix[0], prefix[1]):
+            for k,v in codes_dict.items():
+                for i in range(v[0], v[1]):
+                    if str(pre).startswith(str(i)):
+                        cats.add(k) #k is index
+    return cats
+
+
+def get_disease_category(disease):
+    for k,v in codes_dict.items():
+        for i in range(v[0], v[1]):
+            if disease.startswith(str(i)):
+                return k #key
+
+    return 17
+
 #Filters out subjects who have a large amount of different diseases/conditions
 #Purpose is to minimize the number of independent variables
 def filter_by_subjects(dict):
+    cats = get__prefix_category()
+    print(cats)
     for key, value in dict.items():
         subjects = value
         #check each subject for associated diseases
         for subj in subjects:
-            diseases = subj_disease_dict[subj]
-            #check diseases of subject s
             disease_count_dict[subj] = 0
-            for d in diseases:
-                if check_prefix(prefixes, d) == False:
+            diseases = subj_disease_dict[subj]
+            for disease in diseases:
+                if get_disease_category(str(disease)) not in cats:
+                    print(subj+disease)
+
                     disease_count_dict[subj] = disease_count_dict.get(subj, 0) + 1
             try:
                 dict[key] = [subj for subj in subjects if disease_count_dict[subj] < DISEASE_THRESHOLD]
             except KeyError:
                 continue
+
 
 
 
