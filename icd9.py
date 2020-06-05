@@ -38,7 +38,6 @@ def main():
     #Sort and filter icd9 codes dictionary
     icd9_dict_sorted= {k: icd9_dict[k] for k in sorted(icd9_dict)}
     filtered_dict = filter_by(prefixes, icd9_dict_sorted)
-    get_disease_name(filtered_dict)
     icd9_output(filtered_dict)
 
 #Filter out items in dictionary by ICD9 code
