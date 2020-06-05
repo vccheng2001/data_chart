@@ -114,8 +114,8 @@ def get_continuity_score(chart_events,count,subject_id):
             times.append(elapsed)
     if times == []:
         return 0
-    zeros = [subject_id]*len(times)
-    plt.scatter(times,zeros, s=2) #plot all measurement timestamps over <DURATION>
+    #zeros = [subject_id]*len(times)
+    #plt.scatter(times,zeros, s=2) #plot all measurement timestamps over <DURATION>
     res = stats.kstest(times,'uniform',args=(0,DURATION),N=len(times))
     return (1-res[0])*100
 
@@ -139,10 +139,7 @@ def detailed_output(rankings):
     for subj, score in sorted_rankings:
         v = subj.vscore
         c = subj.cscore
-        print('Subject ' + str(subj.id), end=": ")
-        print(f'V: {v} | C: {c} ',end="| ")
-        print('Overall score: ' + str(score),end=" ")
-        print("\n")
+        print(str(subj.id))
     outfile.close()
 
 
