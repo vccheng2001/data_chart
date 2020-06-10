@@ -9,19 +9,27 @@ This is an algorithm to categorize subject files into specified diseases. Subjec
 1. Scores (based on vitals completeness and continuity of data)
 2. Type of disease (based on ICD9 Code)
 3. Subject's other diseases 
+
+Interesting ICD9 codes 
+320-389  Diseases Of The Nervous System And Sense Organs (132)
+460-519  Diseases Of The Respiratory System (204)
+520-579  Diseases Of The Digestive System (146)
+580-629  Diseases Of The Genitourinary System: (34)
+710-739  Diseases Of The Musculoskeletal System And Connective Tissue (39)
+E8859 Fall from other slipping, tripping, or stumbling (6)
 '''
 
 SCORE_THRESHOLD = 75 #minimum score to consider
-DISEASE_THRESHOLD = 5
+DISEASE_THRESHOLD = 3
 icd9_dict = {}
 scores_dict = {}
 subj_disease_dict = {}
 disease_count_dict = {}
 
 codes_dict = {1:[140,240],2:[240,280],3:[280,290],4:[290,320],5:[320,390],6:[390,460],7:[460,520],8:[520,580],9:[580,630]
-              ,10:[630,680],11:[680,710],12:[710,740],13:[740,760],14:[760,780],15:[780,800],16:[800,1000]}
+              ,10:[630,680],11:[680,710],12:[710,740],13:[740,760],14:[760,780],15:[780,800],16:[800,1000],17:["E000","E999"]}
 #Codes to filter by"
-prefixes = [(460,467)] #Respiration
+prefixes = [(320,389)] #Respiration
 
 #Files to read/write to
 icd9_file = "icd9/DIAGNOSES_ICD.csv"
@@ -53,8 +61,8 @@ def main():
     filter_by_subjects(filtered_dict)
     print(disease_count_dict)
     print("Total patients extracted: " + str(sum_total(filtered_dict)))
-    output(filtered_dict, "filtered_output.txt")
-    output(subj_disease_dict, "disease_count.txt")
+    output(filtered_dict, "filtered_output_TEST.txt")
+    output(subj_disease_dict, "disease_count_TEST.txt")
 
 #Returns total number of patients extracted after filtering
 def sum_total(dict):
@@ -100,37 +108,74 @@ def filter_by_code(prefixes, dict):
 #check if subject has specified diseases by checking against ICD9 code prefix
 def check_prefix(prefixes, k):
     for prefix in prefixes:
-        for i in range(prefix[0], prefix[1]):
-            if k.startswith(str(i)):
-                return True
+        if type(prefix[0]) == str:
+            for pre in range(int(prefix[0][1:]), int(prefix[1][1:])):
+                pre = "E" + str(pre)
+                if k.startswith(str(pre)):
+                    return True
+        else:
+            for pre in range(prefix[0], prefix[1]):
+                if k.startswith(str(pre)):
+                    return True
     return False
+
 
 
 
 def get__prefix_category():
     cats = set()
     for prefix in prefixes:
-        for pre in range(prefix[0], prefix[1]):
-            for k,v in codes_dict.items():
-                for i in range(v[0], v[1]):
-                    if str(pre).startswith(str(i)):
-                        cats.add(k) #k is index
+        if type(prefix[0]) == str:
+            for pre in range(int(prefix[0][1:]),int(prefix[1][1:])):
+                pre = "E" + str(pre)
+                for k,v in codes_dict.items():
+                    if type(v[0]) == str:
+                        for i in range(int(v[0][1:]),int(v[1][1:])):
+                            i = "E" + str(i)
+                            if str(pre).startswith(str(i)):
+                                cats.add(k) #k is index
+
+                    else:
+                        for i in range(v[0],v[1]):
+                            if str(pre).startswith(str(i)):
+                                cats.add(k) #k is index
+
+        else:
+            for pre in range(prefix[0], prefix[1]):
+                for k,v in codes_dict.items():
+                    if type(v[0]) == str:
+                        for i in range(int(v[0][1:]),int(v[1][1:])):
+                            i = "E" + str(i)
+                            if str(pre).startswith(str(i)):
+                                cats.add(k) #k is index
+                    else:
+                        for i in range(v[0],v[1]):
+                            if str(pre).startswith(str(i)):
+                                cats.add(k) #k is index
+
+    print(cats)
     return cats
 
 
 def get_disease_category(disease):
     for k,v in codes_dict.items():
-        for i in range(v[0], v[1]):
-            if disease.startswith(str(i)):
-                return k #key
+        if type(v[0]) != str:
+            for i in range(v[0], v[1]):
+                if disease.startswith(str(i)):
+                    return k #key
+        else:
+            for i in range(int(v[0][1:]),int(v[1][1:])):
+                i = "E" + str(i)
+                if disease.startswith(str(i)):
+                    return k
 
-    return 17
 
 #Filters out subjects who have a large amount of different diseases/conditions
 #Purpose is to minimize the number of independent variables
 def filter_by_subjects(dict):
     cats = get__prefix_category()
-    print(cats)
+    # print("cats is ")
+    # print(cats)
     for key, value in dict.items():
         subjects = value
         #check each subject for associated diseases
@@ -138,8 +183,8 @@ def filter_by_subjects(dict):
             disease_count_dict[subj] = 0
             diseases = subj_disease_dict[subj]
             for disease in diseases:
+
                 if get_disease_category(str(disease)) not in cats:
-                    print(subj+disease)
 
                     disease_count_dict[subj] = disease_count_dict.get(subj, 0) + 1
             try:
@@ -155,7 +200,10 @@ def output(dict, txtfile):
     outfile = open(txtfile, 'w')
     sys.stdout = outfile
     for key, value in dict.items():
-        print(f"{key}: {(value)}")
+        if value == []:
+            continue
+        else:
+            print(f"{key}: {(value)}")
     outfile.close()
 
 

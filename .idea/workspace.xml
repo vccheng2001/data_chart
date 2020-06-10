@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/disease_count.txt" beforeDir="false" afterPath="$PROJECT_DIR$/disease_count.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/filtered_output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/filtered_output.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/filtered_output1.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/icd9.py" beforeDir="false" afterPath="$PROJECT_DIR$/icd9.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -52,28 +53,29 @@
     <session id="-1060045172">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="21" />
+          <entry key="project.closed" value="23" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="6" />
           <entry key="project.open.time.10" value="2" />
+          <entry key="project.open.time.12" value="2" />
           <entry key="project.open.time.3" value="2" />
           <entry key="project.open.time.6" value="2" />
           <entry key="project.open.time.7" value="4" />
           <entry key="project.open.time.8" value="2" />
           <entry key="project.open.time.9" value="4" />
-          <entry key="project.opened" value="23" />
+          <entry key="project.opened" value="25" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="csv" value="174" />
+          <entry key="csv" value="176" />
           <entry key="py" value="17" />
-          <entry key="txt" value="76" />
+          <entry key="txt" value="90" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="PLAIN_TEXT" value="250" />
+          <entry key="PLAIN_TEXT" value="266" />
           <entry key="Python" value="17" />
         </counts>
       </usages-collector>
@@ -81,14 +83,14 @@
         <counts>
           <entry key="csv" value="1" />
           <entry key="dummy" value="37" />
-          <entry key="py" value="21283" />
+          <entry key="py" value="22384" />
           <entry key="txt" value="4164" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="4202" />
-          <entry key="Python" value="21283" />
+          <entry key="Python" value="22384" />
         </counts>
       </usages-collector>
     </session>
@@ -101,7 +103,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sort.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1054">
+            <state relative-caret-position="-1476">
               <caret line="11" selection-start-line="11" selection-end-line="14" selection-end-column="3" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
@@ -113,27 +115,29 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/icd9.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="143">
-              <caret line="141" column="32" selection-start-line="141" selection-start-column="32" selection-end-line="141" selection-end-column="32" />
+            <state relative-caret-position="295">
+              <caret line="28" column="27" lean-forward="true" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
-                <marker date="1591398086000" expanded="true" signature="913:916" ph="..." />
-                <marker date="1591398086000" expanded="true" signature="2051:2053" ph="..." />
-                <marker date="1591398086000" expanded="true" signature="2274:2276" ph="..." />
-                <marker date="1591398086000" expanded="true" signature="2862:4891" ph="..." />
-                <marker date="1591398086000" expanded="true" signature="3122:3942" ph="..." />
-                <marker date="1591398086000" expanded="true" signature="4657:4660" ph="..." />
-                <marker date="1591398086000" expanded="true" signature="5235:5237" ph="..." />
+                <marker date="1591741137000" expanded="true" signature="1304:1307" ph="..." />
+                <marker date="1591741137000" expanded="true" signature="2452:2454" ph="..." />
+                <marker date="1591741137000" expanded="true" signature="2675:2677" ph="..." />
+                <marker date="1591741137000" expanded="true" signature="3928:3931" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/filtered_output.txt">
+        <entry file="file://$PROJECT_DIR$/filtered_output_TEST.txt">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/filtered_output_320_389.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="14" selection-start-column="14" selection-end-column="14" />
+            <state relative-caret-position="75">
+              <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -141,26 +145,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/icd9/DIAGNOSES_ICD.csv">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="639060">
-              <caret line="42604" column="28" selection-start-line="42604" selection-start-column="21" selection-end-line="42604" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/filtered_output1.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-314">
-              <caret line="16" column="286" selection-start-line="16" selection-start-column="286" selection-end-line="16" selection-end-column="286" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/disease_count.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="89">
-              <caret line="18972" column="5" selection-start-line="18972" selection-start-column="5" selection-end-line="18972" selection-end-column="5" />
+            <state relative-caret-position="81">
+              <caret line="608348" column="29" selection-start-line="608348" selection-start-column="24" selection-end-line="608348" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -168,17 +154,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/detailed_rankings.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="936">
-              <caret line="17832" column="56" selection-start-line="17832" selection-start-column="56" selection-end-line="17832" selection-end-column="56" />
+            <state relative-caret-position="90">
+              <caret line="13672" column="13" selection-start-line="13672" selection-start-column="8" selection-end-line="13672" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/icd9/D_ICD_DIAGNOSES.csv">
+        <entry file="file://$PROJECT_DIR$/disease_count_TEST.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="81270">
-              <caret line="5418" column="10" selection-start-line="5418" selection-start-column="6" selection-end-line="5418" selection-end-column="10" />
+            <state relative-caret-position="90">
+              <caret line="4018" column="5" selection-start-line="4018" selection-start-column="5" selection-end-line="4018" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -194,36 +180,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>17734</find>
-      <find>3029</find>
-      <find>2128</find>
-      <find>2128:</find>
-      <find>31113:</find>
-      <find>4911</find>
-      <find>2130</find>
-      <find>51591</find>
-      <find>,48969,</find>
-      <find>31140</find>
-      <find>5382:</find>
-      <find>,24492,</find>
-      <find>6475</find>
-      <find>&quot;7140&quot;</find>
-      <find>8991</find>
-      <find>&quot;E885</find>
-      <find>dict.items</find>
-      <find>.items</find>
-      <find>&quot;E8859&quot;</find>
-      <find>32188:</find>
-      <find>28726:</find>
-      <find>items</find>
-      <find>26038</find>
-      <find>3995:</find>
-      <find>14189</find>
       <find>25602</find>
       <find>40265</find>
       <find>4208</find>
-      <find>disease_c</find>
       <find>60597</find>
+      <find>disease_c</find>
+      <find>6010</find>
+      <find>6010:</find>
+      <find>19390</find>
+      <find>18865</find>
+      <find>5419</find>
+      <find>5419:</find>
+      <find>18371:</find>
+      <find>92787:</find>
+      <find>61855:</find>
+      <find>16133:</find>
+      <find>V</find>
+      <find>print</find>
+      <find>starts</find>
+      <find>88409</find>
+      <find>15783</find>
+      <find>82921</find>
+      <find>22128</find>
+      <find>8537</find>
+      <find>8537:</find>
+      <find>9739:</find>
+      <find>9739:</find>
+      <find>E8839</find>
+      <find>22920</find>
+      <find>19462</find>
+      <find>17</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -250,9 +236,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="203" />
-    <option name="y" value="23" />
-    <option name="width" value="977" />
+    <option name="x" value="40" />
+    <option name="y" value="29" />
+    <option name="width" value="1214" />
     <option name="height" value="709" />
   </component>
   <component name="ProjectView">
@@ -447,15 +433,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="203" y="23" width="977" height="709" extended-state="0" />
+    <frame x="40" y="29" width="1214" height="709" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49756888" weight="0.18" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49756888" visible="true" weight="0.22380553" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" sideWeight="0.5024311" side_tool="true" weight="0.296" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32901135" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.42949757" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2560778" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3987034" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -492,15 +478,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/chart_files/subject_32398_ChartEvents.csv" />
-    <entry file="file://$PROJECT_DIR$/chart_files/subject_32419_ChartEvents.csv" />
-    <entry file="file://$PROJECT_DIR$/chart_files3/subject_48220_ChartEvents.csv" />
-    <entry file="file://$PROJECT_DIR$/chart_files/subject_26290_ChartEvents.csv" />
-    <entry file="file://$PROJECT_DIR$/chart_files3/subject_26290_ChartEvents.csv" />
-    <entry file="file://$PROJECT_DIR$/chart_files3/subject_48821_ChartEvents.csv" />
-    <entry file="file://$PROJECT_DIR$/chart_files3/subject_48830_ChartEvents.csv" />
-    <entry file="file://$PROJECT_DIR$/chart_files3/subject_48851_ChartEvents.csv" />
-    <entry file="file://$PROJECT_DIR$/chart_files3/subject_48863_ChartEvents.csv" />
     <entry file="file://$PROJECT_DIR$/chart_files3/subject_48868_ChartEvents.csv" />
     <entry file="file://$PROJECT_DIR$/chart_files3/subject_48872_ChartEvents.csv" />
     <entry file="file://$PROJECT_DIR$/chart_files3/subject_48812_ChartEvents.csv" />
@@ -559,39 +536,63 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" selection-start-line="10" selection-end-line="10" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/detailed_rankings1.txt">
+    <entry file="file://$PROJECT_DIR$/detailed_rankings1.txt" />
+    <entry file="file://$PROJECT_DIR$/icd9_output.txt" />
+    <entry file="file://$PROJECT_DIR$/icd9_output1.txt" />
+    <entry file="file://$PROJECT_DIR$/disease_count.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-819">
-          <caret line="22" column="55" lean-forward="true" selection-start-line="22" selection-start-column="55" selection-end-line="22" selection-end-column="55" />
+        <state relative-caret-position="89">
+          <caret line="3217" column="78" selection-start-line="3217" selection-start-column="78" selection-end-line="3217" selection-end-column="78" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/icd9_output.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/icd9_output1.txt">
+    <entry file="file://$PROJECT_DIR$/filtered_output1.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
-          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+          <caret line="16" column="286" selection-start-line="16" selection-start-column="286" selection-end-line="16" selection-end-column="286" />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/filtered_output_720_739.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/filtered_output.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="23" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/disease_count_720_739.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/disease_count_520_579.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/filtered_output_580_629.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/disease_count_320_389.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/disease_count_580_629.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2445" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/icd9/D_ICD_DIAGNOSES.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81270">
+        <state relative-caret-position="297">
           <caret line="5418" column="10" selection-start-line="5418" selection-start-column="6" selection-end-line="5418" selection-end-column="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sort.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1054">
+        <state relative-caret-position="-1476">
           <caret line="11" selection-start-line="11" selection-end-line="14" selection-end-column="3" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
@@ -599,54 +600,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/detailed_rankings.txt">
+    <entry file="file://$PROJECT_DIR$/disease_count_TEST.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="936">
-          <caret line="17832" column="56" selection-start-line="17832" selection-start-column="56" selection-end-line="17832" selection-end-column="56" />
+        <state relative-caret-position="90">
+          <caret line="4018" column="5" selection-start-line="4018" selection-start-column="5" selection-end-line="4018" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/filtered_output_320_389.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/icd9/DIAGNOSES_ICD.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="639060">
-          <caret line="42604" column="28" selection-start-line="42604" selection-start-column="21" selection-end-line="42604" selection-end-column="28" />
+        <state relative-caret-position="81">
+          <caret line="608348" column="29" selection-start-line="608348" selection-start-column="24" selection-end-line="608348" selection-end-column="29" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/filtered_output1.txt">
+    <entry file="file://$PROJECT_DIR$/detailed_rankings.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-314">
-          <caret line="16" column="286" selection-start-line="16" selection-start-column="286" selection-end-line="16" selection-end-column="286" />
+        <state relative-caret-position="90">
+          <caret line="13672" column="13" selection-start-line="13672" selection-start-column="8" selection-end-line="13672" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/filtered_output.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="14" selection-start-column="14" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/disease_count.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="89">
-          <caret line="18972" column="5" selection-start-line="18972" selection-start-column="5" selection-end-line="18972" selection-end-column="5" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/filtered_output_TEST.txt">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/icd9.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="141" column="32" selection-start-line="141" selection-start-column="32" selection-end-line="141" selection-end-column="32" />
+        <state relative-caret-position="295">
+          <caret line="28" column="27" lean-forward="true" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-            <marker date="1591398086000" expanded="true" signature="913:916" ph="..." />
-            <marker date="1591398086000" expanded="true" signature="2051:2053" ph="..." />
-            <marker date="1591398086000" expanded="true" signature="2274:2276" ph="..." />
-            <marker date="1591398086000" expanded="true" signature="2862:4891" ph="..." />
-            <marker date="1591398086000" expanded="true" signature="3122:3942" ph="..." />
-            <marker date="1591398086000" expanded="true" signature="4657:4660" ph="..." />
-            <marker date="1591398086000" expanded="true" signature="5235:5237" ph="..." />
+            <marker date="1591741137000" expanded="true" signature="1304:1307" ph="..." />
+            <marker date="1591741137000" expanded="true" signature="2452:2454" ph="..." />
+            <marker date="1591741137000" expanded="true" signature="2675:2677" ph="..." />
+            <marker date="1591741137000" expanded="true" signature="3928:3931" ph="..." />
           </folding>
         </state>
       </provider>
