@@ -27,10 +27,13 @@ DURATION = 4320 #Measure continuity over 4320 minutes (3 days)
 temp_id = ["223762","676","678","223761"]
 resp_id = ["618", "615", "220210", "224690"]
 heart_id = ["211", "220045","220046","220047"]
-bp_id = ["51","442","455","6701","220179","220050","8368","8440","8441","8555","220180","220051"]
+#bp_id = ["51","442","455","6701","220179", "220050","8368","8440","8441","8555","220180","220051"]
+
+#BAD: 51,6701, 8368,8555,220050,220051
+bp_id = ["455","220179","8441","220180"]
 spO2_id = ["646", "220277"]
 
-path = "chart_files1/"
+path = "chart_files2/"
 
 
 dict_vitals = {}
@@ -75,11 +78,14 @@ def main():
     plt.show()
 
 
-
+filter_bp = ["51","6701","8368","8555","220050","220051"]
 #Returns vitals score out of 100 based on number of vitals measurements present in patient data
 def get_vitals_score(chart_events, subject_id, num_rows):
+    filter_bp_flag = 0
     dict_vitals[subject_id] = set()
     for row in chart_events:
+        if row[4] in filter_bp:
+            filter_bp_flag = 1
         if row[4] in temp_id:
             dict_vitals[subject_id].add("temp")
         if row[4] in resp_id:
@@ -93,7 +99,7 @@ def get_vitals_score(chart_events, subject_id, num_rows):
     vitals = dict_vitals.get(subject_id)
     if vitals == 0:
         return 0
-    return len(vitals) * 20
+    return ((len(vitals) - filter_bp_flag)* 20)
 
 
 #Returns continuity score out of 100 based on continuity of measurements taken.
@@ -114,8 +120,8 @@ def get_continuity_score(chart_events,count,subject_id):
             times.append(elapsed)
     if times == []:
         return 0
-    #zeros = [subject_id]*len(times)
-    #plt.scatter(times,zeros, s=2) #plot all measurement timestamps over <DURATION>
+    zeros = [subject_id]*len(times)
+    plt.scatter(times,zeros, s=2) #plot all measurement timestamps over <DURATION>
     res = stats.kstest(times,'uniform',args=(0,DURATION),N=len(times))
     return (1-res[0])*100
 
@@ -128,18 +134,18 @@ def get_num_rows(chart_events):
 
 
 
-#Outputs rankings to detailed_rankings.txt
+#Outputs rankings to updated_rankings.txt
 #Prints out Subject id, V/C scores, and overall score
 def detailed_output(rankings):
-    outfile = open('detailed_rankings.txt', 'w')
+    outfile = open('detailed_rankings2.txt', 'w')
     sys.stdout = outfile
 
     # sort subjects by score (highest to lowest out of 100)
     sorted_rankings = sorted(rankings.items(), key=lambda x: float(x[1]), reverse=True)
     for subj, score in sorted_rankings:
-        v = subj.vscore
         c = subj.cscore
-        print(str(subj.id))
+        v = subj.vscore
+        print(str(subj.id) + " | V: " + str(subj.vscore) + " | C: " + str(subj.cscore) + " = " + str(rankings[subj]))
     outfile.close()
 
 

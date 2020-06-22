@@ -11,12 +11,12 @@ This is an algorithm to categorize subject files into specified diseases. Subjec
 3. Subject's other diseases 
 
 Interesting ICD9 codes 
-320-389  Diseases Of The Nervous System And Sense Organs (132)
-460-519  Diseases Of The Respiratory System (204)
-520-579  Diseases Of The Digestive System (146)
-580-629  Diseases Of The Genitourinary System: (34)
-710-739  Diseases Of The Musculoskeletal System And Connective Tissue (39)
-E8859 Fall from other slipping, tripping, or stumbling (6)
+320-389  Diseases Of The Nervous System And Sense Organs (109)
+460-519  Diseases Of The Respiratory System (166)
+520-579  Diseases Of The Digestive System  (111)
+580-629  Diseases Of The Genitourinary System (30)
+710-739  Diseases Of The Musculoskeletal System And Connective Tissue (24)
+E8859 Fall from other slipping, tripping, or stumbling  (3)
 '''
 
 SCORE_THRESHOLD = 75 #minimum score to consider
@@ -29,12 +29,12 @@ disease_count_dict = {}
 codes_dict = {1:[140,240],2:[240,280],3:[280,290],4:[290,320],5:[320,390],6:[390,460],7:[460,520],8:[520,580],9:[580,630]
               ,10:[630,680],11:[680,710],12:[710,740],13:[740,760],14:[760,780],15:[780,800],16:[800,1000],17:["E000","E999"]}
 #Codes to filter by"
-prefixes = [(320,389)] #Respiration
+prefixes = [(580,630)] #Respiration
 
 #Files to read/write to
 icd9_file = "icd9/DIAGNOSES_ICD.csv"
 icd9_names_file = "icd9/D_ICD_DIAGNOSES.csv"
-score_file = "detailed_rankings.txt"
+score_file = "updated_rankings.txt"
 
 
 
@@ -61,8 +61,8 @@ def main():
     filter_by_subjects(filtered_dict)
     print(disease_count_dict)
     print("Total patients extracted: " + str(sum_total(filtered_dict)))
-    output(filtered_dict, "filtered_output_TEST.txt")
-    output(subj_disease_dict, "disease_count_TEST.txt")
+    output(filtered_dict, "filtered_output_580_629.txt")
+    output(subj_disease_dict, "disease_count_580_629.txt")
 
 #Returns total number of patients extracted after filtering
 def sum_total(dict):
@@ -82,16 +82,16 @@ def fill_dict (dict, key, value):
 
 
 
-#1. Puts all scores above SCORE_THRESHOLD from detailed_rankings.txt into a file
+#1. Puts all scores above SCORE_THRESHOLD from updated_rankings.txt into a file
 # Eliminates subject files with inadequate scores
 def filter_by_scores():
     scores = open(score_file)
     for line in scores:
         if line.strip() == "":
             continue
-        line = line.split(":")
-        score = line[-1].strip()
-        subject_id = line[0][8:]
+        line = line.split("|")
+        score = line[-1][-6:]
+        subject_id = line[0].strip()
         if float(score) >= SCORE_THRESHOLD:
             scores_dict[subject_id] = score
 
